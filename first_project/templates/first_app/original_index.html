@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>First App</title>
+    <link rel="stylesheet" href="{% static "css/mystyle.css" %}">
+  </head>
+  <body>
+    <h1>This is a picture from static folder</h1>
+    <h2>{{ insert_me }}</h2>
+    <img src="{% static "images/che.jpg" %}" alt="Image not available">
+  </body>
+</html>

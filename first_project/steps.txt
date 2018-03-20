@@ -1,0 +1,17 @@
+
+# Create super user
+python manage.py createsuperuser
+
+# Install Faker module
+pip install Faker
+
+# Create a python script and populate models using Faker module
+# Execute - python populate_first_app.py
+
+# Use admin interface to view/add/edit the models
+
+# After creating models execute below commands:
+# python manage.py migrate
+# python manage.py makemigrations first_app
+# python manage.py migrate
+# This project will not have db file, executing above commands will create them
