@@ -9,6 +9,7 @@ pip install Faker
 # Execute - python populate_first_app.py
 
 # Use admin interface to view/add/edit the models
+# Register the models in admin.py to get access ofthose models through admin interface
 
 # After creating models execute below commands:
 # python manage.py migrate
