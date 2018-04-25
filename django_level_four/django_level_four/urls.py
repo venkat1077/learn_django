@@ -20,5 +20,6 @@ from relativeurl import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'relativeurl/', include('relativeurl.urls')),
+    url(r'templateinheritance/', include('templateinheritance.urls')),
     url(r'^$', views.index, name='index'),
 ]
