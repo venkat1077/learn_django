@@ -1,8 +1,8 @@
 from django import forms
-from blog.models import Post, comment
+from blog.models import Post, Comment
 
 
-class PostForm(forms.ModelForms):
+class PostForm(forms.ModelForm):
 
     # Meta class is to provide metadata to the ModelForms class(PostForm in this case)
     class Meta():
@@ -18,7 +18,7 @@ class PostForm(forms.ModelForms):
              # explanation: title field is connected to one(testinputclass) css class
              # TextInput & TextArea are widgets here
             'title':forms.TextInput(attrs={'class':'testinputclass'}),
-            'text':forms.TextArea(attr={'class':'editable medium-editor-textarea postcontent'})
+            'text':forms.Textarea(attrs={'class':'editable medium-editor-textarea postcontent'})
         }
 
 class CommentForm(forms.ModelForm):
@@ -27,6 +27,6 @@ class CommentForm(forms.ModelForm):
         fields = ('author', 'text')
 
         widgets = {
-            'author':forms.TextInput(attrs={'class':testinputclass}),
-            'text':forms.TextArea(attr={'class':'editable medium-editor-textarea'})
+            'author':forms.TextInput(attrs={'class':'testinputclass'}),
+            'text':forms.Textarea(attrs={'class':'editable medium-editor-textarea'})
         }

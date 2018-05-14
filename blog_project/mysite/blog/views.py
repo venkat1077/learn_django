@@ -1,3 +1,62 @@
 from django.shortcuts import render
+from blog.models import Post, Comment
+from blog.forms import PostForm, CommentForm
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import (TemplateView, ListView,
+                                 DetailView, CreateView,
+                                 UpdateView, DeleteView)
 
 # Create your views here.
+
+class AboutView(TemplateView):
+    template_name = 'about.html'
+
+class PostListView(ListView):
+    # connected model
+    model = Post
+
+    def get_queryset(self):
+        # Get all objects from the Post model and filter it based on the given query
+        # field lookup : __lte(lookuptype) = 'less than or equal to'
+        # Wqual SQL query : SELECT * FROM Post where published_date <= timezone.now();
+        # filer first and then order them
+        return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+
+class PostDetailView(DetailView):
+    model = Post
+
+# mixins are for class based views, decorators work for function based views
+class CreatePostView(LoginRequiredMixin, CreateView):
+    # incase the user is not logged in, where should go
+    login_url = '/login/'
+    # redirect to detail view on successful login
+    redirect_filed_name = 'blog/post_detail.html'
+    # connected form
+    form_class = PostForm
+    model = Post
+
+# login required for updating views as well
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+    redirect_filed_name = 'blog/post_detail.html'
+    form_class = PostForm
+    model = Post
+    # here all fields are editable(no include or exclude specified)
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    # where should to go after deleting a post
+    # reverse_lazy wil wait till the post gets deleted
+    # post_list - name of the url pattern to match
+    success_url = reverse_lazy('post_list')
+
+class DraftListView(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_filed_name = 'blog/post_list.html'
+    model = Post
+
+    def get_queryset(self):
+        return Post.objects.filter(published_date__isnull=True).order_by('created_date')
