@@ -15,8 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+# Import views from auth application - for login/logout
+from django.contrib.auth import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('blog.urls')),
+    # views.login will suplly value for {{nextin login.html}}
+    url(r'accounts/login/$', views.login, name='login'),
+    # 'next_page' - where to go after logging out. '/' means home page
+    url(r'accounts/logout/$', views.logout, name='logout', kwargs={'next_page':'/'})
 ]
