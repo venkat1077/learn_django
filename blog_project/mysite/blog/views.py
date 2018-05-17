@@ -35,7 +35,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     # incase the user is not logged in, where should go
     login_url = '/login/'
     # redirect to detail view on successful login
-    redirect_filed_name = 'blog/post_detail.html'
+    redirect_field_name = 'blog/post_detail.html'
     # connected form
     form_class = PostForm
     model = Post
@@ -43,7 +43,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 # login required for updating views as well
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
-    redirect_filed_name = 'blog/post_detail.html'
+    redirect_field_name = 'blog/post_detail.html'
     form_class = PostForm
     model = Post
     # here all fields are editable(no include or exclude specified)
@@ -61,7 +61,7 @@ class DraftListView(LoginRequiredMixin, ListView):
     model = Post
 
     def get_queryset(self):
-        return Post.objects.filter(published_date__isnull=True).order_by('created_date')
+        return Post.objects.filter(published_date__isnull=True).order_by('create_date')
 
 ##################################################
 ##################################################
@@ -69,8 +69,8 @@ class DraftListView(LoginRequiredMixin, ListView):
 @login_required
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    post.publish
-    return redirect('posts_detail', pk=pk)
+    post.publish()
+    return redirect('post_detail', pk=pk)
 
 # login_required decorator is for function based views
 # This view required to be logged in

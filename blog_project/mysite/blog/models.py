@@ -10,7 +10,7 @@ class Post(models.Model):
     # No upper bound set for text areas
     text = models.TextField()
     # set the current time as the default value
-    create_date = models.DateTimeField(default=timezone.now())
+    create_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
@@ -23,7 +23,7 @@ class Post(models.Model):
     # after creating the post, return to detail_view of that post
     # Django will look for get_abolute_url method where to back,
     # using reverse method, we can redirect to detail_view
-    def get_abolute_url(self):
+    def get_absolute_url(self):
         return reverse("post_detail", kwargs={'pk':self.pk})
 
     def __str__(self):
@@ -35,7 +35,7 @@ class Comment(models.Model):
     post = models.ForeignKey('blog.Post', related_name='comments')
     author = models.CharField(max_length=200)
     text = models.TextField()
-    create_date = models.DateTimeField(default=timezone.now())
+    create_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
 
     def approve(self):
